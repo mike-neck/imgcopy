@@ -1,0 +1,15 @@
+name: run swift test
+
+on:
+  push:
+    - master
+    - feature/*
+
+jobs:
+  test:
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Show Swift version
+        run: swift --version
