@@ -5,7 +5,7 @@
 import Foundation
 import Cocoa
 
-let clipboard: DataConsumer = ClipBoard()
+public let macOSClipboard: DataConsumer = ClipBoard()
 
 class ClipBoard: DataConsumer {
 
@@ -52,6 +52,7 @@ protocol ObjectPersistence {
 
 extension NSPasteboard: ObjectPersistence {
     func persist(_ item: NSPasteboardItem) -> Bool {
-        self.writeObjects([item])
+        self.clearContents()
+        return self.writeObjects([item])
     }
 }

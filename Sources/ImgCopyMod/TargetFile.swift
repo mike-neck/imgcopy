@@ -32,6 +32,16 @@ public struct TargetFile {
         }
     }
 
+    public var descriptionIfNotSupported: String? {
+        get {
+            if canRead {
+                return nil
+            } else {
+                return content.errorDescription
+            }
+        }
+    }
+
     public func copyContent(to consumer: DataConsumer) -> Error? {
         let err = content.copy(to: consumer)
         if err != nil {
@@ -82,13 +92,19 @@ public extension FileContent {
         }
     }
 
+    var errorDescription: String {
+        get {
+            "\(self) not supported"
+        }
+    }
+
     func copy(to consumer: DataConsumer) -> Error? {
         switch self {
         case .png(_), .tiff(_):
             return consumer.accept(self)
         case .jpg, .gif:
-            return CannotCopyError("\(self) not supported")
-        case .another: return CannotCopyError("this type not supported")
+            return CannotCopyError(errorDescription)
+        case .another: return CannotCopyError(errorDescription)
         }
     }
 }

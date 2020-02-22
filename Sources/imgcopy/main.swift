@@ -9,12 +9,23 @@ func printUsage() {
     print("")
 }
 
+let mayTargetFile = TargetFile(from: CommandLine.arguments)
 
-let targetFile = TargetFile(from: CommandLine.arguments)
-
-if targetFile == nil {
+guard let targetFile = mayTargetFile else {
     printUsage()
     exit(1)
 }
 
+let mayNotSupported = targetFile.descriptionIfNotSupported
 
+if let desc: String = mayNotSupported {
+    print(desc)
+    exit(2)
+}
+
+if let err: Error = targetFile.copyContent(to: macOSClipboard) {
+    print("error \(err)")
+    exit(4)
+}
+
+exit(0)
