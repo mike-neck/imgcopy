@@ -1,10 +1,12 @@
 .PHONY: build
 build: clean
 	swift build -c release --show-bin-path
+	swift build -c release
 
 .PHONY: debug
 debug: clean
 	swift build --show-bin-path
+	swift build
 
 .PHONY: test
 test:
