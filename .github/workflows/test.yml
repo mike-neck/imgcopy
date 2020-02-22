@@ -12,5 +12,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Show Swift version
         run: swift --version
+
+      - name: Run Tests
+        run: swift test
