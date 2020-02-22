@@ -2,8 +2,9 @@ name: run swift test
 
 on:
   push:
-    - master
-    - feature/*
+    branches:
+      - master
+      - feature/*
 
 jobs:
   test:
