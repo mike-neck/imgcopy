@@ -17,4 +17,16 @@ jobs:
         run: swift --version
 
       - name: Run Tests
-        run: swift test
+        run: make test
+
+      - name: Build artifact
+        run: make build
+
+      - name: Show dependencies
+        run: make run-otool
+
+      - name: Upload snapshot artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: imgcopy
+          path: .build/x86_64-apple-macosx/release/imgcopy

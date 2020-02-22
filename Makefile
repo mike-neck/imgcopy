@@ -3,6 +3,10 @@ build: clean
 	swift build -c release --show-bin-path
 	swift build -c release
 
+.PHONY: run-otool
+run-otool:
+	otool -L `swift build -c release --show-bin-path`/imgcopy
+
 .PHONY: debug
 debug: clean
 	swift build --show-bin-path
