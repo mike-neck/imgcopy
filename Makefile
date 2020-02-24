@@ -1,6 +1,9 @@
+.PHONY: show-path
+show-path:
+	@echo `swift build -c release --show-bin-path`/imgcopy
+
 .PHONY: build
-build: clean
-	swift build -c release --show-bin-path
+build: clean show-path
 	swift build -c release
 
 .PHONY: run-otool
