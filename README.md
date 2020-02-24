@@ -24,3 +24,12 @@ $ cd imgcopy
 $ make build     # builds imgcopy
 $ make show-path # shows imgcopy path which is built now
 ```
+
+Usage
+---
+
+Give an image file as parameter, then it is copied to a clipboard.
+
+```shell-session
+$ imgcopy /path/to/image-file.png
+```
