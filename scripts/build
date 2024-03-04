@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+#description: Builds all binaries
+
+readonly config="${1}"
+function getConfig() {
+  if [[ -z "${config}" ]]; then
+    echo "-prod"
+  else
+    echo ""
+  fi
+}
+
+readonly targetConfig="$(getConfig)"
+while read -r toolName; do
+  make "${toolName}${targetConfig}"
+done < <(grep 'executable' Package.swift | grep targets  | cut -d'"' -f2)

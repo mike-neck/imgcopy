@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#description: Delete build artifacts
+
+readonly config="${1}"
+if [[ -n "${config}" ]]; then
+  echo "skip" > /dev/stderr
+  exit 0
+fi
+
+swift package clean
+rm -rf build
