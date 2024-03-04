@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+#description: Runs tests
+
+readonly config="${1}"
+function getConfig() {
+  if [[ -z "${config}" ]]; then
+    echo "release"
+  else
+    echo "${config}"
+  fi
+}
+
+readonly buildConfig="$(getConfig)"
+readonly reportDir="build/test/reports/${buildConfig}"
+[[ -d "${reportDir}" ]] || mkdir -p "${reportDir}"
+
+swift test --xunit-output "${reportDir}/report.xml" --configuration "${buildConfig}" | tee "${reportDir}/tests.txt"

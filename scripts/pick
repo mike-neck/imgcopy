@@ -1,0 +1,15 @@
+
+#!/usr/bin/env bash
+
+readonly config="${1:-}"
+if [[ -n "${config}" ]]; then
+  echo "skip" > /dev/stderr
+  exit 0
+fi
+
+readonly destinationDir="build/bin"
+[[ -d "${destinationDir}" ]] || mkdir -p "${destinationDir}"
+
+while read -r toolName; do
+  find .build -type f -name "${toolName}" -maxdepth 3 -exec cp {} "${destinationDir}/" \;
+done < <(grep 'executable' Package.swift | grep targets  | cut -d'"' -f2)
