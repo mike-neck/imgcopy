@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+#description: Shows binary path.
+
+readonly config="${1}"
+function getConfig() {
+  if [[ -z "${config}" ]]; then
+    echo "release"
+  else
+    echo "${config}"
+  fi
+}
+
+readonly buildConfig="$(getConfig)"
+
+find "${PWD}/.build" \
+  -type f \
+  -maxdepth 3 \
+  -exec bash -c 'grep -q "${2}" <<< "${1}"' _ {} "${buildConfig}" \; \
+  -exec test -x {} \; \
+  -print

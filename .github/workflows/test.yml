@@ -3,6 +3,7 @@ name: run swift test
 on:
   push:
     branches:
+      - main
       - master
       - feature/*
 
@@ -11,7 +12,7 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Show Swift version
         run: swift --version
@@ -22,11 +23,17 @@ jobs:
       - name: Build artifact
         run: make build
 
-      - name: Show dependencies
-        run: make run-otool
+      - name: Show path
+        run: make show-path
 
-      - name: Upload snapshot artifact
-        uses: actions/upload-artifact@v1
+      - name: Pick binaries
+        run: make pick
+
+      - name: Show binaries
+        run: find build -type f -exec test -x {} \; -print
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: imgcopy
-          path: .build/x86_64-apple-macosx/release/imgcopy
+          name: test-report
+          path: build/test
