@@ -1,35 +1,60 @@
 imgcopy
 ===
 
-`imgcopy` copies image file in your pc to clipboard.
+A utility tools for copying data between image files and memory.
 
-Requirements
+- `imgcopy`: Copies a specified image file to the clipboard.
+- `imgfile`: Writes an image in the clipboard to a specified file.
+
+System requirements
 ---
 
-* macOS 10.6 or later
-
-Limitations
----
-
-Currently `imgcopy` only can copy only `png` files.
+- macOS 14.2.1 or later
+- Xcode 15.2 or later
+- Swift 5.9.0 or later
 
 Install
 ---
 
-`imgcopy` is currently not distributed, please build it as following way.
+These tools are not distributed, so you need to build them and copy them into a directory on your PATH to use them.
 
-```shell session
-$ git clone https://github.com/mike-neck/imgcopy.git
-$ cd imgcopy
-$ make build     # builds imgcopy
-$ make show-path # shows imgcopy path which is built now
+Build
+---
+
+You can build them by running the following commands:
+
+```shell
+git clone https://github.com/mike-neck/imgcopy.git
+cd imgcopy
+make build
+make pick
 ```
+
+After running these commands, the following two binaries are created:
+
+```text
+build/bin/imgfile
+build/bin/imgcopy
+```
+
+You can then copy these into a directory on your PATH to use them.
 
 Usage
 ---
 
-Give an image file as parameter, then it is copied to a clipboard.
+### `imgcopy`
 
-```shell-session
-$ imgcopy /path/to/image-file.png
+This command copies an image file to the clipboard.
+
+```shell
+imgcopy /path/to/img.png
 ```
+
+### `imgfile`
+
+This command saves an image in the clipboard to a file.
+
+```shell
+imgfile /path/to/new-image.png
+```
+
