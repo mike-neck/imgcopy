@@ -14,6 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: swift-actions/setup-swift@v1
+        name: Configure Swift version
+        with:
+          swift-version: "5.9.0"
+
       - name: Show Swift version
         run: swift --version
 
