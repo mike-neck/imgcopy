@@ -13,3 +13,6 @@ readonly destinationDir="build/bin"
 while read -r toolName; do
   find .build -type f -name "${toolName}" -maxdepth 3 -exec cp {} "${destinationDir}/" \;
 done < <(grep 'executable' Package.swift | grep targets  | cut -d'"' -f2)
+
+find "${destinationDir}" -type f
+
