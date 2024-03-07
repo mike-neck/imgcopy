@@ -14,16 +14,8 @@ extension ImgFile {
             throw InvalidOptionsError("http/https protocol not supported")
         }
 
-        let fileURL: URL
-        if filePath.hasPrefix("file://") {
-            guard let tempURL = URL(string: filePath) else {
-                throw InvalidOptionsError("invalid file URL \(filePath)")
-            }
-            fileURL = tempURL
-        } else if filePath.hasPrefix("/") {
-            fileURL = URL(fileURLWithPath: filePath)
-        } else {
-            fileURL = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent(filePath)
+        guard let fileURL = URL(withUnknownFormatOf: filePath) else {
+            throw InvalidOptionsError("invalid file URL \(filePath)")
         }
 
         let clipboard = Clipboard.general
@@ -47,4 +39,19 @@ extension InvalidOptionsError {
 
 struct RuntimeError: Error, CustomStringConvertible {
     var description: String
+}
+
+extension URL {
+    init?(withUnknownFormatOf filePath: String) {
+        if filePath.hasPrefix("file://") {
+            guard let tempURL = URL(string: filePath) else {
+                return nil
+            }
+            self = tempURL
+        } else if filePath.hasPrefix("/") {
+            self = URL(fileURLWithPath: filePath)
+        } else {
+            self = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent(filePath)
+        }
+    }
 }
