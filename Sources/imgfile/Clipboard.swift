@@ -13,8 +13,8 @@ enum Clipboard {
 }
 
 extension Clipboard {
-    func data(_ ext: AvailableExtensions) -> Data? {
+    func data(forType type: ImgType) -> Data? {
         let clipboard = NSPasteboard.general
-        return clipboard.data(forType: ext.imgType)
+        return clipboard.data(forType: type)
     }
 }
