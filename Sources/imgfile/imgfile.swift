@@ -8,7 +8,7 @@ struct ImgFile: ParsableCommand {
 
     mutating func run() throws {
         do {
-            try ImgFile.execute(filePath)
+            try ImgFile.execute(with: self)
         } catch let err as InvalidOptionsError {
             throw ValidationError(err.description)
         }

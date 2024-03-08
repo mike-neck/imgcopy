@@ -9,6 +9,11 @@ import Foundation
 import Cocoa
 
 extension ImgFile {
+
+    static func execute(with imgFile: ImgFile) throws {
+        try execute(imgFile.filePath)
+    }
+
     static func execute(_ filePath: String) throws {
         guard let fileURL = URL(withUnknownFormatOf: filePath) else {
             if filePath.hasPrefix("https://") || filePath.hasPrefix("http://") {
