@@ -10,11 +10,10 @@ import Cocoa
 
 extension ImgFile {
     static func execute(_ filePath: String) throws {
-        if filePath.hasPrefix("https://") || filePath.hasPrefix("http://") {
-            throw InvalidOptionsError("http/https protocol not supported")
-        }
-
         guard let fileURL = URL(withUnknownFormatOf: filePath) else {
+            if filePath.hasPrefix("https://") || filePath.hasPrefix("http://") {
+                throw InvalidOptionsError("http/https protocol not supported")
+            }
             throw InvalidOptionsError("invalid file URL \(filePath)")
         }
 
@@ -43,7 +42,9 @@ struct RuntimeError: Error, CustomStringConvertible {
 
 extension URL {
     init?(withUnknownFormatOf filePath: String) {
-        if filePath.hasPrefix("file://") {
+        if filePath.hasPrefix("https://") || filePath.hasPrefix("http://") {
+            return nil
+        } else if filePath.hasPrefix("file://") {
             guard let tempURL = URL(string: filePath) else {
                 return nil
             }
