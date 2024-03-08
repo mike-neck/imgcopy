@@ -23,7 +23,7 @@ extension ImgFile {
         }
 
         let clipboard = Clipboard.general
-        guard let imageData = clipboard.data(AvailableExtensions.png) else {
+        guard let imageData = clipboard.data(forType: NSPasteboard.PasteboardType.png) else {
             throw RuntimeError(description: "failed to read a clipboard image as png")
         }
 
