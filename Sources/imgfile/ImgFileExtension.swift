@@ -8,6 +8,7 @@
 import Foundation
 import Cocoa
 
+@available(macOS 14, *)
 extension ImgFile {
 
     static func execute(with imgFile: ImgFile) throws {
@@ -22,12 +23,19 @@ extension ImgFile {
             throw InvalidOptionsError("invalid file URL \(filePath)")
         }
 
+        let extItems = filePath.split(separator: ".")
+        let outputFormat = AvailableExtensions(withDefaults: extItems.last?.lowercased())
+
         let clipboard = Clipboard.general
         guard let imageData = clipboard.data(forType: NSPasteboard.PasteboardType.png) else {
             throw RuntimeError(description: "failed to read a clipboard image as png")
         }
 
-        try imageData.write(to: fileURL, options: NSData.WritingOptions.atomic)
+        guard let outputData = outputFormat.convertFormat(imageData) else {
+            throw RuntimeError(description: "failed to convert format of image to \(outputFormat)")
+        }
+
+        try outputData.write(to: fileURL, options: NSData.WritingOptions.atomic)
     }
 }
 
