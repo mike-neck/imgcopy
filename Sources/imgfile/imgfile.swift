@@ -1,6 +1,7 @@
 import ArgumentParser
 
 @main
+@available(macOS 14, *)
 struct ImgFile: ParsableCommand {
 
     @Argument(help: "The file path")
