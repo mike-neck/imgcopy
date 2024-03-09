@@ -11,6 +11,11 @@ function getConfig() {
   fi
 }
 
+readonly versionFile="version.txt"
+readonly version="$(git describe --tags --abbrev=0 2>/dev/null | tr -d '\n')"
+echo "${version:-"0.1.0"}" > "${versionFile}"
+find Sources -type d -name "img*" -exec cp "${versionFile}" {}/"${versionFile}" \;
+
 readonly targetConfig="$(getConfig)"
 while read -r toolName; do
   make "${toolName}${targetConfig}"
