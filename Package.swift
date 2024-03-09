@@ -22,10 +22,14 @@ let package = Package(
                     name: "imgfile",
                     dependencies: [
                         .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                    ]),
+                    ],
+                    resources: [.copy("version.txt")]
+                    ),
             .executableTarget(
                     name: "imgcopy",
-                    dependencies: ["ImgCopyMod"]),
+                    dependencies: ["ImgCopyMod"],
+                    resources: [.copy("version.txt")]
+            ),
             .target(
                     name: "ImgCopyMod",
                     dependencies: []),

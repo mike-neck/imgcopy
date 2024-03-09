@@ -8,3 +8,5 @@ xcuserdata/
 
 .swiftpm/
 build/
+
+version.txt

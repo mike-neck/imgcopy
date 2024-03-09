@@ -2,6 +2,8 @@
 
 #description: Delete build artifacts
 
+readonly versionFile="version.txt"
+
 readonly config="${1}"
 if [[ -n "${config}" ]]; then
   echo "skip" > /dev/stderr
@@ -10,3 +12,6 @@ fi
 
 swift package clean
 rm -rf build
+find . -type f -name "${versionFile}" \
+  -print \
+  -exec rm {} \;
