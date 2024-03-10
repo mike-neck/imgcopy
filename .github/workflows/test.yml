@@ -12,8 +12,8 @@ jobs:
     strategy:
       matrix:
         runner:
-          - macos-14
-          - macos-14-large
+          - macos-13
+          - macos-13-xlarge
     runs-on: ${{ matrix.runner }}
     name: "Test on ${{ matrix.runner }}"
     steps:

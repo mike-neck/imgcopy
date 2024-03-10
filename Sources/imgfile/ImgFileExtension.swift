@@ -8,7 +8,7 @@
 import Foundation
 import Cocoa
 
-@available(macOS 14, *)
+@available(macOS 13, *)
 extension ImgFile {
 
     static var version: String {
