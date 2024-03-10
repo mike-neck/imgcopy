@@ -20,5 +20,5 @@ fi
 
 find build/bin -type f \
   -exec test -x {} \; \
-  -exec gh release upload "${version}" "{}#%#${archName}-{}" \; \
+  -exec gh release upload "${version}" "{}#${archName}-{}" \; \
   -print
