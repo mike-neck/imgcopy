@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+readonly config="${1:-}"
+if [[ -n "${config}" ]]; then
+  echo "skip" > /dev/stderr
+  exit 0
+fi
+
+readonly version="$(git describe --tags --abbrev=0 2>/dev/null | tr -d '\n')"
+if [[ -z "${version}" ]]; then
+  echo "no tag given" > /dev/stderr
+  exit 1
+fi
+
+find build/bin -type f \
+  -exec test -x {} \; \
+  -exec gh release upload "${version}" {} \; \
+  -print
