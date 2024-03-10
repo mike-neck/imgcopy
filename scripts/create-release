@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+readonly config="${1:-}"
+if [[ -n "${config}" ]]; then
+  echo "skip" > /dev/stderr
+  exit 0
+fi
+
+readonly version="$(git describe --tags --abbrev=0 2>/dev/null | tr -d '\n')"
+if [[ -z "${version}" ]]; then
+  echo "no tag given" > /dev/stderr
+  exit 1
+fi
+
+if gh release view "${version}" 2>/dev/null | grep -q '.'; then
+  echo "release ${version} exists, skip" > /dev/stderr
+  exit 0
+fi
+
+gh release create \
+  "${version}" \
+  --generate-notes \
+  --target main

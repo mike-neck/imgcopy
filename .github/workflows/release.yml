@@ -29,5 +29,12 @@ jobs:
       - name: Pick binaries
         run: make pick
 
+      - name: Create release
+        run: make create-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - name: Upload artifact
         run: make upload
+        env:
+          GH_TOKEN: ${{ github.token }}
