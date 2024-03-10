@@ -10,7 +10,7 @@ readonly givenVersion="${RELEASE_VERSION:-""}"
 readonly version="${givenVersion:-"$(git describe --tags --abbrev=0 2>/dev/null | tr -d '\n')"}"
 if [[ -z "${version}" ]]; then
   echo "no tag given" > /dev/stderr
-  exit 1
+  exit 0
 fi
 
 if gh release view "${version}" 2>/dev/null | grep -q '.'; then
