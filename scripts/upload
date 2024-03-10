@@ -12,7 +12,13 @@ if [[ -z "${version}" ]]; then
   exit 1
 fi
 
+readonly archName="$(uname -m)"
+if [[ -z "${archName}" ]]; then
+  echo "no cpu architecture found" > /dev/stderr
+  exit 2
+fi
+
 find build/bin -type f \
   -exec test -x {} \; \
-  -exec gh release upload "${version}" {} \; \
+  -exec gh release upload "${version}" "{}#%#${archName}-{}" \; \
   -print
