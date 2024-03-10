@@ -11,6 +11,18 @@ import Cocoa
 @available(macOS 14, *)
 extension ImgFile {
 
+    static var version: String {
+        get {
+            guard
+                let versionTextURL = Bundle.module.url(forResource: "version", withExtension: "txt"),
+                let text = versionTextURL.text
+            else {
+                return "unknown"
+            }
+            return text.replacingOccurrences(of: "\n", with: "")
+        }
+    }
+
     static func execute(with imgFile: ImgFile) throws {
         try execute(imgFile.filePath)
     }
@@ -66,6 +78,16 @@ extension URL {
             self = URL(fileURLWithPath: filePath)
         } else {
             self = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent(filePath)
+        }
+    }
+
+    var text: String? {
+        get {
+            do {
+                return try String(contentsOf: self)
+            } catch {
+                return nil
+            }
         }
     }
 }

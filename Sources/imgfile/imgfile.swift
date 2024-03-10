@@ -4,7 +4,21 @@ import ArgumentParser
 @available(macOS 14, *)
 struct ImgFile: ParsableCommand {
 
-    @Argument(help: "The file path")
+    static var imgFile: String = "imgfile"
+
+    static var configuration: CommandConfiguration {
+        get {
+            let version = ImgFile.version
+            return CommandConfiguration(
+                commandName: imgFile,
+                abstract: "Saves an image from clipboard to a file in given path.",
+                usage: "\(imgFile) <file-path>",
+                version: version
+            )
+        }
+    }
+
+    @Argument(help: "Specifies the path of the file to be saved. The image format (PNG or JPEG) to be saved is determined based on the file extension provided here.")
     var filePath: String
 
     mutating func run() throws {
