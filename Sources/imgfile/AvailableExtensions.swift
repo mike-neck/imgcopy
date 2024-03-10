@@ -19,7 +19,7 @@ enum AvailableExtensions {
 
 typealias ImgType = NSPasteboard.PasteboardType
 
-@available(macOS 14, *)
+@available(macOS 13, *)
 extension AvailableExtensions {
     static private var valueMap: [String: AvailableExtensions] = [
         "png": .png,

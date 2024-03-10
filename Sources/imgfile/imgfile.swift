@@ -1,7 +1,7 @@
 import ArgumentParser
 
 @main
-@available(macOS 14, *)
+@available(macOS 13, *)
 struct ImgFile: ParsableCommand {
 
     static var imgFile: String = "imgfile"
