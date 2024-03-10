@@ -6,7 +6,8 @@ if [[ -n "${config}" ]]; then
   exit 0
 fi
 
-readonly version="$(git describe --tags --abbrev=0 2>/dev/null | tr -d '\n')"
+readonly givenVersion="${RELEASE_VERSION:-""}"
+readonly version="${givenVersion:-"$(git describe --tags --abbrev=0 2>/dev/null | tr -d '\n')"}"
 if [[ -z "${version}" ]]; then
   echo "no tag given" > /dev/stderr
   exit 1
