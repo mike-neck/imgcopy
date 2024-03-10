@@ -9,8 +9,17 @@ on:
 
 jobs:
   test:
-    runs-on: macOS-latest
+    strategy:
+      matrix:
+        runner:
+          - macos-14
+          - macos-14-large
+    runs-on: ${{ matrix.runner }}
+    name: "Test on ${{ matrix.runner }}"
     steps:
+      - name: Show CPU Name
+        run: sysctl -n "machdep.cpu.brand_string"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -40,5 +49,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-report
+          name: "test-report-${{ matrix.runner }}"
           path: build/test
