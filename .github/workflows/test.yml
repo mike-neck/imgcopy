@@ -13,7 +13,7 @@ jobs:
       matrix:
         runner:
           - macos-13
-          - macos-13-xlarge
+#          - macos-13-xlarge
     runs-on: ${{ matrix.runner }}
     name: "Test on ${{ matrix.runner }}"
     steps:
