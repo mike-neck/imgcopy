@@ -1,17 +1,29 @@
 #!/usr/bin/env bash
 
+readonly buildDir="build"
+
 readonly config="${1:-}"
 if [[ -n "${config}" ]]; then
   echo "skip" > /dev/stderr
   exit 0
 fi
 
-readonly destinationDir="build/bin"
+readonly arch="$(uname -m)"
+if [[ -z "${arch}" ]]; then
+  echo "no architecture found" > /dev/stderr
+  exit 1
+fi
+
+readonly destinationDir="${buildDir}/${arch}"
 [[ -d "${destinationDir}" ]] || mkdir -p "${destinationDir}"
 
 while read -r toolName; do
   find .build -type f -name "${toolName}" -maxdepth 3 -exec cp {} "${destinationDir}/" \;
 done < <(grep 'executable' Package.swift | grep targets  | cut -d'"' -f2)
 
-find "${destinationDir}" -type f
-
+bash -c '
+readonly workDir="${1}"
+readonly targetDir="${2}"
+cd "${workDir}"
+zip -r "${targetDir}.zip" "${targetDir}"
+' _ "${buildDir}" "${arch}"
