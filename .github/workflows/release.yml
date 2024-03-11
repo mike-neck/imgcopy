@@ -8,7 +8,7 @@ on:
     inputs:
       version:
         description: "tag name for this release"
-        required: false
+        required: true
         type: string
 
 jobs:
@@ -46,3 +46,4 @@ jobs:
         run: make upload
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ inputs.version }}
