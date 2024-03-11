@@ -19,7 +19,4 @@ if [[ -z "${archName}" ]]; then
   exit 2
 fi
 
-find build/bin -type f \
-  -exec test -x {} \; \
-  -exec gh release upload "${version}" "{}#${archName}-{}" \; \
-  -print
+gh release upload "${version}" "build/${archName}.zip#${archName}"
