@@ -5,9 +5,10 @@
 import Foundation
 import Cocoa
 
+@MainActor
 public let macOSClipboard: DataConsumer = ClipBoard()
 
-class ClipBoard: DataConsumer {
+final class ClipBoard: DataConsumer {
 
     let destination: ObjectPersistence
 
@@ -46,7 +47,7 @@ extension FileContent {
     }
 }
 
-protocol ObjectPersistence {
+protocol ObjectPersistence: Sendable {
     func persist(_ item: NSPasteboardItem) -> Bool
 }
 

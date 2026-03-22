@@ -51,7 +51,7 @@ public struct TargetFile {
     }
 }
 
-public enum FileContent {
+public enum FileContent: Sendable {
     case png(Data)
     case tiff(Data)
     case another
@@ -126,7 +126,7 @@ extension FileContent: CustomStringConvertible {
     }
 }
 
-public protocol DataConsumer {
+public protocol DataConsumer: Sendable {
     func accept(_ content: FileContent) -> Error?
 }
 

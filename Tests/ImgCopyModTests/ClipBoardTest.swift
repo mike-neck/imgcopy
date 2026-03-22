@@ -9,7 +9,8 @@ import Cocoa
 
 class ClipBoardTest: XCTestCase {
 
-    static var allTests = [
+    @MainActor
+    static let allTests = [
         ("testAccept_AlwaysFalse", testAccept_AlwaysFalse),
         ("testAccept_AlwaysTrue", testAccept_AlwaysTrue),
         ("testAccept_PngDataSuccess", testAccept_PngDataSuccess),
@@ -72,7 +73,7 @@ class ClipBoardTest: XCTestCase {
 enum MockPersistence: ObjectPersistence {
     case alwaysFalse
     case alwaysTrue
-    case assertingItem((NSPasteboardItem) -> Void, Bool)
+    case assertingItem(@Sendable (NSPasteboardItem) -> Void, Bool)
 
     func persist(_ item: NSPasteboardItem) -> Bool {
         switch self {
@@ -88,7 +89,7 @@ enum MockPersistence: ObjectPersistence {
 }
 
 extension MockPersistence {
-    init(withAssertingPasteItem assertion: @escaping (NSPasteboardItem) -> Void, withReturnValue result: Bool) {
+    init(withAssertingPasteItem assertion: @escaping @Sendable (NSPasteboardItem) -> Void, withReturnValue result: Bool) {
         self = .assertingItem(assertion, result)
     }
 }
