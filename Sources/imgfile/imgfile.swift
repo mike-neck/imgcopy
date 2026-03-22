@@ -4,7 +4,7 @@ import ArgumentParser
 @available(macOS 13, *)
 struct ImgFile: ParsableCommand {
 
-    static var imgFile: String = "imgfile"
+    static let imgFile: String = "imgfile"
 
     static var configuration: CommandConfiguration {
         get {

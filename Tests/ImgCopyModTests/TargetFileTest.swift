@@ -31,7 +31,8 @@ class TargetFileTest: XCTestCase {
         assertion(targetFile)
     }
 
-    static var allTests = [
+    @MainActor
+    static let allTests = [
         ("testTargetNameInitialization", testTargetNameInitializer),
         ("testCanRead", testCanRead)
     ]

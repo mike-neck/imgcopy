@@ -21,7 +21,7 @@ typealias ImgType = NSPasteboard.PasteboardType
 
 @available(macOS 13, *)
 extension AvailableExtensions {
-    static private var valueMap: [String: AvailableExtensions] = [
+    static private let valueMap: [String: AvailableExtensions] = [
         "png": .png,
         "jpeg": .jpg,
         "jpg": .jpg,
