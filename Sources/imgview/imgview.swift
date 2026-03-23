@@ -30,8 +30,12 @@ struct ImgView: ParsableCommand {
     }
 }
 
-protocol ImgViewCommand {
-    func exec() throws
+protocol ImageSource {
+    func loadImage() -> Data?
+}
+
+protocol ImageConsumer {
+    func show(image data: Data) throws
 }
 
 enum ViewMode: String, EnumerableFlag, ExpressibleByArgument {
