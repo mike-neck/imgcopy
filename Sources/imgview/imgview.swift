@@ -1,5 +1,6 @@
 import ArgumentParser
 import Foundation
+import Cocoa
 
 @main
 @available(macOS 13, *)
@@ -30,8 +31,8 @@ struct ImgView: ParsableCommand {
     }
 }
 
-protocol ImageSource {
-    func loadImage() -> Data?
+protocol DataSource {
+    func loadData() throws -> Data
 }
 
 protocol ImageConsumer {
@@ -98,4 +99,67 @@ enum ImageSource {
     case file(path: String)
     case clipboard
 
+}
+
+typealias ImgType = NSPasteboard.PasteboardType
+
+struct RuntimeError: Error, CustomStringConvertible {
+    var description: String
+}
+
+extension ImageSource: DataSource {
+    func loadData() throws -> Data {
+        switch self {
+        case .file(let path):
+            let imgFile = ImageFile(from: path)
+            return try imgFile.loadData()
+        case .clipboard:
+            let clipboard = Clipboard.general
+            guard let data = clipboard.data(forType: NSPasteboard.PasteboardType.png) else {
+                throw RuntimeError(description: "failed to read a clipboard image as png")
+            }
+            return data
+        }
+    }
+}
+
+enum Clipboard {
+    case general
+}
+
+extension Clipboard {
+    func data(forType type: ImgType) -> Data? {
+        let clipboard = NSPasteboard.general
+        return clipboard.data(forType: type)
+    }
+}
+
+struct ImageFile {
+    let filepath: String
+
+    init(from filepath: String) {
+        self.filepath = filepath
+    }
+
+    func loadData() throws -> Data {
+        guard let handle = FileHandle(forReadingAtPath: filepath) else {
+            throw RuntimeError(description: "failed to read file \(filepath)")
+        }
+        defer {
+            handle.closeFile()
+        }
+        let data = handle.readDataToEndOfFile()
+        switch data[0] {
+        case 0x89:
+            return data
+        case 0xFF: // jpg
+            throw RuntimeError(description: "unsupported data type(jpeg)")
+        case 0x47: // gif
+            throw RuntimeError(description: "unsupported data type(gif)")
+        case 0x49, 0x4D:
+            return data
+        default:
+            throw RuntimeError(description: "unknow data type")
+        }
+    }
 }
