@@ -39,7 +39,8 @@ protocol ImageConsumer {
     func show(image data: Data) throws
 }
 
-enum ViewMode: String, EnumerableFlag, ExpressibleByArgument {
+@MainActor
+enum ViewMode: String, EnumerableFlag, ExpressibleByArgument, @preconcurrency ImageConsumer {
     case terminal, window
 
     init(rawValue: String) throws {
@@ -47,6 +48,16 @@ enum ViewMode: String, EnumerableFlag, ExpressibleByArgument {
             self = .window
         } else {
             self = .terminal
+        }
+    }
+
+    @MainActor
+    func show(image data: Data) throws {
+        switch (self) {
+        case .terminal:
+//            try showInTermial(data)
+        case .window:
+            try showInWindow(data)
         }
     }
 }
