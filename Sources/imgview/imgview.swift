@@ -55,7 +55,7 @@ enum ViewMode: String, EnumerableFlag, ExpressibleByArgument, @preconcurrency Im
     func show(image data: Data) throws {
         switch (self) {
         case .terminal:
-//            try showInTermial(data)
+            try showInTermial(data)
         case .window:
             try showInWindow(data)
         }
