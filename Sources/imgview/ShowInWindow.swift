@@ -57,7 +57,7 @@ func showInWindow(_ data: Data) throws {
 
 func getDefaultRect(image: NSImage) -> NSRect {
     guard let mainScreen = NSScreen.main else {
-        return NSMakeRect(0, 25, image.size.width, image.size.height)
+        return NSMakeRect(image.size.width, image.size.height, 0, 25)
     }
     let mainFrame = mainScreen.frame
     let size = mainFrame.size
@@ -68,9 +68,9 @@ func getDefaultRect(image: NSImage) -> NSRect {
     #endif
     return NSMakeRect(
             width / 3 + 1,
-            height / 4 + 1.0,
+            height / 3 + 1,
             image.size.width,
-            image.size.height
+            image.size.height,
     )
 }
 
