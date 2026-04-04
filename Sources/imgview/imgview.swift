@@ -182,7 +182,7 @@ struct ImageFile {
 
     func loadData() throws -> Data {
         guard let handle = FileHandle(forReadingAtPath: filepath) else {
-            throw RuntimeError(description: "failed to read file \(filepath)")
+            throw RuntimeError(description: "failed to read file '\(filepath)'")
         }
         defer {
             handle.closeFile()
