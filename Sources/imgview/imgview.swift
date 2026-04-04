@@ -27,7 +27,18 @@ struct ImgView: ParsableCommand {
     }
 
     mutating func run() throws {
+        let dataSrc: DataSource = ImageSource(filePath)
+        let data = try tryCall(name: "load data") { try dataSrc.loadData() }
+        let imageConsumer: ImageConsumer = mode
+        try tryCall(name: "showing image") { try imageConsumer.show(image: data) }
+    }
+}
 
+func tryCall<T>(name: String, _ operation: () throws -> T) throws -> T {
+    do {
+        return try operation()
+    } catch {
+        throw RuntimeError(description: "an error occured while performing \(name), error: \(error)")
     }
 }
 
