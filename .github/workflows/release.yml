@@ -13,8 +13,8 @@ on:
 
 jobs:
   release:
-    name: Release x86_64
-    runs-on: macos-13
+    name: Release
+    runs-on: macos-15
     permissions:
       contents: write
     steps:
@@ -22,10 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: swift-actions/setup-swift@v1
+      - uses: swift-actions/setup-swift@v3
         name: Configure Swift version
         with:
-          swift-version: "5.9.0"
+          swift-version: "6.3"
 
       - name: Show Swift version
         run: swift --version

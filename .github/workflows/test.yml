@@ -12,21 +12,18 @@ jobs:
     strategy:
       matrix:
         runner:
-          - macos-13
-#          - macos-13-xlarge
+          - macos-15
     runs-on: ${{ matrix.runner }}
     name: "Test on ${{ matrix.runner }}"
     steps:
-      - name: Show CPU Name
-        run: sysctl -n "machdep.cpu.brand_string"
 
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: swift-actions/setup-swift@v1
+      - uses: swift-actions/setup-swift@v3
         name: Configure Swift version
         with:
-          swift-version: "5.9.0"
+          swift-version: "6.3"
 
       - name: Show Swift version
         run: swift --version
