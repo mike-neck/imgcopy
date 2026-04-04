@@ -24,7 +24,7 @@ func showInTermial(_ data: Data) throws {
 
 struct ShowInTerminal {
     static let separator = ";"
-    static let esc: String = "\033["
+    static let esc: String = "\u{001B}]"
     static let code: String = "1337"
     static let protocolName = "File"
     static let endOfCode: String = "\u{7}"
