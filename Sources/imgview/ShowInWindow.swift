@@ -36,6 +36,9 @@ func showInWindow(_ data: Data) throws {
         throw RuntimeError(description: "Unexpected data type for image")
     }
     let windowRect = getDefaultRect(image: image)
+#if DEBUG
+    print("image rect: x=\(windowRect.origin.x) y=\(windowRect.origin.y) h=\(windowRect.height) w=\(windowRect.width)")
+#endif
     let imageView = NSImageView(image: image)
     imageView.imageScaling = .scaleProportionallyUpOrDown
     let window = ImageViewWindow(
@@ -60,6 +63,9 @@ func getDefaultRect(image: NSImage) -> NSRect {
     let size = mainFrame.size
     let width = size.width
     let height = size.height
+    #if DEBUG
+    print("calculated rect: w=\(width) h=\(height), image: w=\(image.size.width) h=\(image.size.height)")
+    #endif
     return NSMakeRect(
             width / 3 + 1,
             height / 4 + 1.0,
