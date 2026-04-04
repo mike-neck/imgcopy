@@ -1,13 +1,18 @@
 import Cocoa
 import Foundation
 
-class ImageViewWindow: NSWindow, NSWindowDelegate {
+class ImageViewWindow: NSWindow, NSWindowDelegate, NSApplicationDelegate {
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
     }
-
+    
     func windowWillClose(_ notification: Notification) {
         NSApplication.shared.terminate(self)
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        NSApplication.shared.terminate(self)
+        return true
     }
 }
 
@@ -43,6 +48,7 @@ func showInWindow(_ data: Data) throws {
     window.title = "Image View"
     window.contentView = imageView
     window.makeKeyAndOrderFront(nil)
+    windowApp.delegate = window
     windowApp.run()
 }
 
