@@ -10,7 +10,7 @@ struct ImgView: ParsableCommand {
     var mode: ViewMode = .terminal
 
     @Argument(help: "Specifies the image path to view. If not specified, an image from clipboard will be shown.")
-    var filePath: String
+    var filePath: String?
 
     static var configuration: CommandConfiguration {
         get {
@@ -102,6 +102,23 @@ extension URL {
             } catch {
                 return nil
             }
+        }
+    }
+}
+
+extension ImageSource {
+    init(_ source: String?) {
+        #if DEBUG
+            print("image source: source=\(String(describing: source))")
+        #endif
+        guard let path = source else {
+            self = .clipboard
+            return
+        }
+        if path == "" {
+            self = .clipboard
+        } else {
+            self = .file(path: path)
         }
     }
 }
