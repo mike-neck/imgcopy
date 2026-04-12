@@ -14,8 +14,7 @@ extension ImgFile {
     static var version: String {
         get {
             guard
-                let versionTextURL = Bundle.module.url(forResource: "version", withExtension: "txt"),
-                let text = versionTextURL.text
+                let text = String(bytes: PackageResources.version_txt, encoding: .utf8)
             else {
                 return "unknown"
             }

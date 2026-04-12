@@ -24,19 +24,19 @@ let package = Package(
                     dependencies: [
                         .product(name: "ArgumentParser", package: "swift-argument-parser"),
                     ],
-                    resources: [.copy("version.txt")]
+                    resources: [.embedInCode("version.txt")]
                     ),
             .executableTarget(
                     name: "imgcopy",
                     dependencies: ["ImgCopyMod"],
-                    resources: [.copy("version.txt")]
+                    resources: [.embedInCode("version.txt")]
             ),
             .executableTarget(
                 name: "imgview",
                 dependencies: [
                     .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 ],
-                resources: [.copy("version.txt")]
+                resources: [.embedInCode("version.txt")]
             ),
             .target(
                     name: "ImgCopyMod",
