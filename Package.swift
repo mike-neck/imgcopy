@@ -47,5 +47,8 @@ let package = Package(
             .testTarget(
                     name: "ImgCopyModTests",
                     dependencies: ["ImgCopyMod"]),
+            .testTarget(
+                    name: "ImgViewTests",
+                    dependencies: ["imgview"]),
         ]
 )

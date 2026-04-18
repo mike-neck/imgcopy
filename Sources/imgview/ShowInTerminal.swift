@@ -7,7 +7,7 @@
 
 import Foundation
 
-func showInTermial(_ data: Data) throws {
+public func showInTermial(_ data: Data, _ out: (String) -> Void = { print($0) }) throws {
     let base64Contents = data.base64EncodedString()
     var sb = ""
     sb.append(ShowInTerminal.esc)
@@ -19,7 +19,7 @@ func showInTermial(_ data: Data) throws {
     sb.append(image: base64Contents)
     sb.append(ShowInTerminal.endOfCode)
     let output = sb
-    print(output)
+    out(output)
 }
 
 struct ShowInTerminal {
