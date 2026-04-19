@@ -29,9 +29,8 @@ extension Data {
 }
 
 @MainActor
-func showInWindow(_ data: Data) throws {
-    let windowApp = NSApplication.shared
-    NSApp.setActivationPolicy(.regular)
+public func showInWindow(_ data: Data, application windowApp: NSApplication = NSApplication.shared) throws {
+    windowApp.setActivationPolicy(.regular)
     guard let image = data.image else {
         throw RuntimeError(description: "Unexpected data type for image")
     }
