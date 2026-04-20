@@ -17,8 +17,6 @@ enum AvailableExtensions {
 //    case gif
 }
 
-typealias ImgType = NSPasteboard.PasteboardType
-
 @available(macOS 13, *)
 extension AvailableExtensions {
     static private let valueMap: [String: AvailableExtensions] = [

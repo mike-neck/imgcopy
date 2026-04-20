@@ -1,6 +1,7 @@
 import ArgumentParser
 import Foundation
 import Cocoa
+import ClipboardReaderMod
 
 @main
 @available(macOS 13, *)
@@ -139,8 +140,6 @@ public enum ImageSource: Equatable {
 
 }
 
-typealias ImgType = NSPasteboard.PasteboardType
-
 struct RuntimeError: Error, CustomStringConvertible {
     var description: String
 }
@@ -158,17 +157,6 @@ extension ImageSource: DataSource {
             }
             return data
         }
-    }
-}
-
-enum Clipboard {
-    case general
-}
-
-extension Clipboard {
-    func data(forType type: ImgType) -> Data? {
-        let clipboard = NSPasteboard.general
-        return clipboard.data(forType: type)
     }
 }
 
