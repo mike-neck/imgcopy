@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ClipboardReaderMod
 import Cocoa
 import ImageIO
 import UniformTypeIdentifiers
