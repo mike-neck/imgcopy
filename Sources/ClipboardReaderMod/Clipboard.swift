@@ -8,11 +8,13 @@
 import Foundation
 import Cocoa
 
-enum Clipboard {
+public typealias ImgType = NSPasteboard.PasteboardType
+
+public enum Clipboard {
     case general
 }
 
-extension Clipboard {
+public extension Clipboard {
     func data(forType type: ImgType) -> Data? {
         let clipboard = NSPasteboard.general
         return clipboard.data(forType: type)

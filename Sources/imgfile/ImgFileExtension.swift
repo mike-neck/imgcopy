@@ -7,6 +7,7 @@
 
 import Foundation
 import Cocoa
+import ClipboardReaderMod
 
 @available(macOS 13, *)
 extension ImgFile {
