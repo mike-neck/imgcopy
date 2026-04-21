@@ -52,12 +52,10 @@ extension ImgFile {
     }
 }
 
-struct InvalidOptionsError: Error, CustomStringConvertible {
-    var description: String
-}
+public struct InvalidOptionsError: Error, CustomStringConvertible {
+    public let description: String
 
-extension InvalidOptionsError {
-    init(_ message: String) {
+    public init(_ message: String) {
         self.description = message
     }
 }
