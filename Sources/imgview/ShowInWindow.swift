@@ -1,5 +1,6 @@
 import Cocoa
 import Foundation
+import IOUtils
 
 class ImageViewWindow: NSWindow, NSWindowDelegate, NSApplicationDelegate {
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {

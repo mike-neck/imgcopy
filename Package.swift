@@ -24,6 +24,7 @@ let package = Package(
                     dependencies: [
                         .product(name: "ArgumentParser", package: "swift-argument-parser"),
                         "ClipboardReaderMod",
+                        "IOUtils",
                     ],
                     resources: [.embedInCode("version.txt")]
                     ),
@@ -36,13 +37,17 @@ let package = Package(
                 name: "imgview",
                 dependencies: [
                     .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                        "ClipboardReaderMod",
+                    "ClipboardReaderMod",
+                    "IOUtils",
                 ],
                 resources: [.embedInCode("version.txt")]
             ),
             .target(
-                    name: "ImgCopyMod",
-                    dependencies: []),
+                name: "IOUtils",
+                dependencies: []),
+            .target(
+                name: "ImgCopyMod",
+                dependencies: [/*"FileReaderMod"*/]),
             .target(
                     name: "ClipboardReaderMod",
                     dependencies: [],

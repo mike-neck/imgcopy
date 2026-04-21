@@ -8,6 +8,7 @@
 import Foundation
 import Cocoa
 import ClipboardReaderMod
+import IOUtils
 
 @available(macOS 13, *)
 extension ImgFile {
@@ -59,10 +60,6 @@ extension InvalidOptionsError {
     init(_ message: String) {
         self.description = message
     }
-}
-
-struct RuntimeError: Error, CustomStringConvertible {
-    var description: String
 }
 
 extension URL {
