@@ -2,6 +2,7 @@ import ArgumentParser
 import Foundation
 import Cocoa
 import ClipboardReaderMod
+import IOUtils
 
 @main
 @available(macOS 13, *)
@@ -111,10 +112,6 @@ public enum ImageSource: Equatable {
     case file(path: String)
     case clipboard
 
-}
-
-struct RuntimeError: Error, CustomStringConvertible {
-    var description: String
 }
 
 extension ImageSource: DataSource {
