@@ -61,5 +61,8 @@ let package = Package(
             .testTarget(
                     name: "ImgViewTests",
                     dependencies: ["imgview"]),
+            .testTarget(
+                    name: "IOUtilsTests",
+                    dependencies: ["IOUtils"]),
         ]
 )
