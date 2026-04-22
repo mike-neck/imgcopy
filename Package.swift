@@ -42,16 +42,18 @@ let package = Package(
                 ],
                 resources: [.embedInCode("version.txt")]
             ),
+
             .target(
                 name: "IOUtils",
                 dependencies: []),
             .target(
                 name: "ImgCopyMod",
-                dependencies: [/*"FileReaderMod"*/]),
+                dependencies: []),
             .target(
                     name: "ClipboardReaderMod",
                     dependencies: [],
             ),
+
             .testTarget(
                     name: "imgcopyTests",
                     dependencies: ["imgcopy"]),
