@@ -29,7 +29,13 @@ struct ImgView: ParsableCommand {
     }
 
     mutating func run() throws {
-        let dataSrc: DataSource = ImageSource(filePath)
+        guard let dataSrc: DataSource = ImageSource(filePath) else {
+            let source = switch filePath {
+            case nil, "": "clipboard"
+            default      : filePath
+            }
+            throw RuntimeError(description: "no image found at \(String(describing: source))")
+        }
         let data = try tryCall(name: "load data") { try dataSrc.loadData() }
         let imageConsumer: ImageConsumer = mode
         try tryCall(name: "showing image") { try imageConsumer.show(image: data) }
@@ -92,7 +98,7 @@ extension ImgView {
 }
 
 public extension ImageSource {
-    init(_ source: String?) {
+    init?(_ source: String?) {
         #if DEBUG
             print("image source: source=\(String(describing: source))")
         #endif
@@ -103,59 +109,55 @@ public extension ImageSource {
         if path == "" {
             self = .clipboard
         } else {
-            self = .file(path: path)
+            guard let content = FileContent(of: path) else {
+                return nil
+            }
+            self = .file(content: content)
         }
     }
 }
 
 public enum ImageSource: Equatable {
-    case file(path: String)
+    case file(content: FileContent)
     case clipboard
 
+}
+
+extension FileContent: Equatable {
+    static public func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.png(let leftData), .png(let rightData)):
+            return leftData == rightData
+        case (.tiff(let leftData), .tiff(let rightData)):
+            return leftData == rightData
+        case (.gif, .gif):
+            return true
+        case (.jpg, .jpg):
+            return true
+        case (.another, .another):
+            return true
+        case (.cannotOpen, .cannotOpen):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 extension ImageSource: DataSource {
     func loadData() throws -> Data {
         switch self {
-        case .file(let path):
-            let imgFile = ImageFile(from: path)
-            return try imgFile.loadData()
+        case .file(let content):
+            guard let data = try content.getData() else {
+                throw RuntimeError(description: "failed to get data from image source")
+            }
+            return data
         case .clipboard:
             let clipboard = Clipboard.general
             guard let data = clipboard.data(forType: NSPasteboard.PasteboardType.png) else {
                 throw RuntimeError(description: "failed to read a clipboard image as png")
             }
             return data
-        }
-    }
-}
-
-struct ImageFile {
-    let filepath: String
-
-    init(from filepath: String) {
-        self.filepath = filepath
-    }
-
-    func loadData() throws -> Data {
-        guard let handle = FileHandle(forReadingAtPath: filepath) else {
-            throw RuntimeError(description: "failed to read file '\(filepath)'")
-        }
-        defer {
-            handle.closeFile()
-        }
-        let data = handle.readDataToEndOfFile()
-        switch data[0] {
-        case 0x89:
-            return data
-        case 0xFF: // jpg
-            throw RuntimeError(description: "unsupported data type(jpeg)")
-        case 0x47: // gif
-            throw RuntimeError(description: "unsupported data type(gif)")
-        case 0x49, 0x4D:
-            return data
-        default:
-            throw RuntimeError(description: "unknow data type")
         }
     }
 }
